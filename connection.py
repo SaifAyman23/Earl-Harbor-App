@@ -100,9 +100,9 @@ if "logged_in" in st.session_state and st.session_state["logged_in"]:
     elif page == "Custom Queries":
         st.header("Want to write custom queries?")
         
-        query = st.text_input("Your Query:")
+        query = st.chat_input("Your Query:")
         
-        if st.button("Execute"):
+        if query:
             st.code(query, 'sql')
             report_data = pd.read_sql(query, conn)
             st.write(report_data)
