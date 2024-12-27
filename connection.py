@@ -9,14 +9,14 @@ username = 'k'
 password = '1234'
 
 conn = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
-cursor = cursor = conn.cursor()
+cursor = conn.cursor()
 
 # Function for customs calculation
 def calculate_customs(vessel_weight, shipment_weight, shipment_cost):
     base_customs = 0.05 * shipment_cost
+    shipment_weight_surcharge = 0.01 * shipment_weight
     
     vessel_weight_surcharge = 0.02 * vessel_weight
-    shipment_weight_surcharge = 0.01 * shipment_weight
     
     total_customs = base_customs + vessel_weight_surcharge + shipment_weight_surcharge
     return round(total_customs, 2)
@@ -80,7 +80,7 @@ if "logged_in" in st.session_state and st.session_state["logged_in"]:
         choice = st.selectbox('Select a vessel to calculate its customs', [vessel[1] for vessel in vessels if vessel[0] != "Users"])
         
         cursor.execute("""
-            SELECT v.Name AS vessel_name, ROUND(SUM(v.Weight), 2) AS vessel_weight, ROUND(SUM(s.Weight), 2) AS shipment_weight, ROUND(SUM(s.Cost), 2) AS shipment_cost
+            SELECT v.Name AS vessel_name, SUM(v.Weight) AS vessel_weight, SUM(s.Weight) AS shipment_weight, SUM(s.Cost) AS shipment_cost
             FROM Vessel v
             JOIN Shipment s ON s.Vessel_id = v.Vessel_id
             WHERE v.Name = ?

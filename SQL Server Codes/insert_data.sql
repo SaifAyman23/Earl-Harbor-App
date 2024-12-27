@@ -21,7 +21,7 @@ VALUES
 ('Ocean Breeze', 'Cargo', 22000, 100, 1008, 25, 14, 35, 'Departed', 5, 5),
 ('Royal Sun', 'Tanker', 30000, 150, 1009, 24, 12, 38, 'Docked', 6, 6);
 
--- Insert 12 Shipments
+
 INSERT INTO Shipment (Departure_date, Arrival_date, Weight, Cost, Destination, Status, Vessel_id)
 VALUES 
 ('2024-11-01', '2024-11-05', 12000, 2000, 'New York', 'Delivered', 1),
