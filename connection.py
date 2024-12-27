@@ -33,7 +33,7 @@ if "logged_in" not in st.session_state:
     password = st.text_input("Password", type="password")
     
     if st.button("Login"):
-        cursor.execute("SELECT * FROM Users WHERE username = ? AND password = ?", (username, password))
+        cursor.execute("SELECT * FROM Users WHERE Name = ? AND Password = ?", (username, password))
         rows = cursor.fetchall()
         if rows:
             st.session_state["logged_in"] = True
@@ -80,22 +80,22 @@ if "logged_in" in st.session_state and st.session_state["logged_in"]:
         choice = st.selectbox('Select a vessel to calculate its customs', [vessel[1] for vessel in vessels if vessel[0] != "Users"])
         
         cursor.execute("""
-            SELECT v.name AS vessel_name, ROUND(SUM(v.weight), 2) AS vessel_weight, ROUND(SUM(s.weight), 2) AS shipment_weight, ROUND(SUM(s.cost), 2) AS shipment_cost
+            SELECT v.Name AS vessel_name, ROUND(SUM(v.Weight), 2) AS vessel_weight, ROUND(SUM(s.Weight), 2) AS shipment_weight, ROUND(SUM(s.Cost), 2) AS shipment_cost
             FROM Vessel v
-            JOIN Shipment s ON s.vessel_id = v.vessel_id
-            WHERE v.name = ?
-            GROUP BY v.name;
+            JOIN Shipment s ON s.Vessel_id = v.Vessel_id
+            WHERE v.Name = ?
+            GROUP BY v.Name;
         """, (choice,))
 
         vessel = cursor.fetchone()
         st.write(vessel)
-        vessel_weight = st.number_input("Enter Vessel Weight (kg)", min_value=0.0, value=vessel[1])
-        shipment_weight = st.number_input("Enter Shipment Weight ($)", min_value=0.0, value=vessel[2])
+        vessel_weight = st.number_input("Enter Vessel Weight (kg)", min_value=0, value=vessel[1])
+        shipment_weight = st.number_input("Enter Shipment Weight ($)", min_value=0, value=vessel[2])
         shipment_cost = st.number_input("Enter Shipment cost ($)", min_value=0, value=(vessel[3]))
         
         if st.button("Calculate"):
             customs_fee = calculate_customs(vessel_weight, shipment_weight, shipment_cost)
-            st.write(f"Total Customs Fee: ${customs_fee:.10f}")
+            st.write(f"Total Customs Fee: ${customs_fee}")
 
     elif page == "Custom Queries":
         st.header("Want to write custom queries?")
