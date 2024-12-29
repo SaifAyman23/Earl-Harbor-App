@@ -102,9 +102,12 @@ if "logged_in" in st.session_state and st.session_state["logged_in"]:
         
         query = st.chat_input("Your Query:")
         
-        if query:
+        if query and 'select' in query.lower():
             st.code(query, 'sql')
-            report_data = pd.read_sql(query, conn)
-            st.write(report_data)
+            data = pd.read_sql(query, conn)
+            st.write(data)
+        elif query:
+            st.warning("SELECT queries only!")
+            
 
 conn.close()

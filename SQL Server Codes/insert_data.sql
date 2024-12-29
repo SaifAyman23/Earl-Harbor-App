@@ -1,3 +1,17 @@
+INSERT INTO Users (Name, Password, Email, Phone)
+VALUES
+('saif', '54321', 'saif@gmail.com', '123-456-7890'),
+('omnia', '54321', 'omnia@gmail.com', '987-654-3210'),
+('admin', '54321', 'admin@gmail.com', '555-123-4567');
+
+INSERT INTO Client (Name, Email, Telephone)
+VALUES
+('Robert King', 'robert.king@example.com', '123-789-4560'),
+('Emily Davis', 'emily.davis@example.com', '987-123-4560'),
+('Michael Brown', 'michael.brown@example.com', '555-678-1234'),
+('Sarah Johnson', 'sarah.johnson@example.com', '777-555-1234'),
+('David Lee', 'david.lee@example.com', '555-987-6543'),
+('Laura Martinez', 'laura.martinez@example.com', '222-456-7890');
 
 
 INSERT INTO Docking_Bay (Location, Capacity, Available, User_ID)
